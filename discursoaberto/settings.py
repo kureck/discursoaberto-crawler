@@ -68,7 +68,8 @@ DOWNLOAD_DELAY = 1
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'discursoaberto.pipelines.DiscursoPipeline': 200,
-    'scrapy_mongodb.MongoDBPipeline': 300
+    'discursoaberto.pipelines.JsonWriterPipeline': 800
+    # 'scrapy_mongodb.MongoDBPipeline': 300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -32,6 +32,7 @@ class DiscursoItem(scrapy.Item):
         output_processor=TakeFirst()
     )
     speech = scrapy.Field()
+    speaker = scrapy.Field()
 
 
 class OradorItem(scrapy.Item):

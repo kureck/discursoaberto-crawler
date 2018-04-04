@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+import re
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
@@ -80,6 +80,7 @@ class DiscursoSpider(CrawlSpider):
                        re='\d{3}\.\d{1}\.\d{2}\.[A-Z]{1}')
 
         created_at = self._parse_date(response)
+        item.add_value('speaker', self.process_url(response))
         item.add_value('created_at', created_at)
         item.add_xpath('phase', '//table[@align="center"]/tr[2]/td[3]/text()',
                        re='\s\w{2}')
@@ -87,3 +88,8 @@ class DiscursoSpider(CrawlSpider):
         item.add_xpath('speech', '//p[@align="justify"]//font/text()')
 
         return item.load_item()
+
+    def process_url(self, response):
+        url = response.url.replace('+', '')
+        pattern = r'(?<=txApelido=)(.*?)(?=&txEtapa)'
+        return re.search(pattern, url).group(1)
